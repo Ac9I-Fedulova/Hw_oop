@@ -30,12 +30,12 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSwitchToNextRadioStation() {    // включим станцию в диапазоне и нажмем Next
+    public void shouldSwitchToNextRadioStationFromFirst() {    // включим станцию в диапазоне (с 1) и нажмем Next
         Radio radio = new Radio();
 
-        radio.setCurrentStationNumber(3);
+        radio.setCurrentStationNumber(1);
 
-        int expected = 4;
+        int expected = 2;
         int actual = radio.next();
 
         Assertions.assertEquals(expected, actual);
@@ -54,12 +54,12 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSwitchToPrevRadioStation() {   // включим станцию в диапазоне и нажмем Prev
+    public void shouldSwitchToPrevRadioStationFromEighth() {   // включим станцию в диапазоне (c 8) и нажмем Prev
         Radio radio = new Radio();
 
-        radio.setCurrentStationNumber(6);
+        radio.setCurrentStationNumber(8);
 
-        int expected = 5;
+        int expected = 7;
         int actual = radio.prev();
 
         Assertions.assertEquals(expected, actual);
@@ -78,7 +78,20 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldIncreaseVolume() {  // увеличени звука в ceщ-ем диапозоне
+    public void shouldIncreaseVolumeWithinLimit() {  // увеличени звука в существующем диапазоне
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(99);
+        radio.louder();
+
+        int expected = 100;
+        int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotIncreaseVolumeAboveMax() {  // не должен увеличить звук выше максимального
         Radio radio = new Radio();
 
         radio.setCurrentVolume(100);
@@ -91,13 +104,26 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldDecreaseVolume() {  // уменьшение звука в ceщ-ем диапозоне
+    public void shouldDecreaseVolumeWithinLimit() {  // понижение звука в существующем диапазоне
         Radio radio = new Radio();
 
-        radio.setCurrentVolume(23);
+        radio.setCurrentVolume(1);
         radio.quieter();
 
-        int expected = 22;
+        int expected = 0;
+        int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotDecreaseVolumeUnderMin() {  // не должен понижать звук ниже минимального
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(0);
+        radio.quieter();
+
+        int expected = 0;
         int actual = radio.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);

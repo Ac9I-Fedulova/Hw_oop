@@ -4,7 +4,7 @@ public class Radio {
     public int currentStationNumber;
     public int currentVolume;
 
-    public  int getCurrentStationNumber() {
+    public int getCurrentStationNumber() {
         return currentStationNumber;
     }
 
@@ -42,7 +42,7 @@ public class Radio {
         return currentVolume;
     }
 
-    public  void setCurrentVolume(int newCurrentVolume) {
+    public void setCurrentVolume(int newCurrentVolume) {
         if (newCurrentVolume > 100) {
             return;
         }
@@ -52,13 +52,13 @@ public class Radio {
         currentVolume = newCurrentVolume;
     }
 
-    public void louder() {
+    public void louder() {    // повышает громкость на 1
         if (currentVolume < 100) {
             currentVolume = currentVolume + 1;
         }
     }
 
-    public void quieter() {
+    public void quieter() {    // понижает громкость на 1
         if (currentVolume > 0) {
             currentVolume = currentVolume - 1;
         }
