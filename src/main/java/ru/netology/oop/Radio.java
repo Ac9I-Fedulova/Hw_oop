@@ -37,4 +37,31 @@ public class Radio {
         }
         return currentStationNumber;
     }
+
+    public int getCurrentVolume() {
+        return currentVolume;
+    }
+
+    public  void setCurrentVolume(int newCurrentVolume) {
+        if (newCurrentVolume > 100) {
+            return;
+        }
+        if (newCurrentVolume < 0) {
+            return;
+        }
+        currentVolume = newCurrentVolume;
+    }
+
+    public void louder() {
+        if (currentVolume < 100) {
+            currentVolume = currentVolume + 1;
+        }
+    }
+
+    public void quieter() {
+        if (currentVolume > 0) {
+            currentVolume = currentVolume - 1;
+        }
+    }
+
 }

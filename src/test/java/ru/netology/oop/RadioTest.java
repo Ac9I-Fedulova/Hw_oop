@@ -77,4 +77,31 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    public void shouldIncreaseVolume() {  // увеличени звука в ceщ-ем диапозоне
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(100);
+        radio.louder();
+
+        int expected = 100;
+        int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldDecreaseVolume() {  // уменьшение звука в ceщ-ем диапозоне
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(23);
+        radio.quieter();
+
+        int expected = 22;
+        int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+
 }
