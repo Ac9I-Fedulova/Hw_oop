@@ -40,17 +40,17 @@ public class Radio {
         return currentVolume;
     }
 
-    public void setCurrentVolume(int newCurrentVolume) {
-        if (newCurrentVolume > 100) {
-            return;
-        }
-        if (newCurrentVolume < 0) {
-            return;
-        }
-        currentVolume = newCurrentVolume;
-    }
+//    public void setCurrentVolume(int newCurrentVolume) {
+//        if (newCurrentVolume > 100) {
+//            return;
+//        }
+//        if (newCurrentVolume < 0) {
+//            return;
+//        }
+//        currentVolume = newCurrentVolume;
+//    }
 
-    public void louder() {    // повышает громкость на 1
+    public void louder() {     // повышает громкость на 1
         if (currentVolume < 100) {
             currentVolume++;
         }
@@ -60,22 +60,5 @@ public class Radio {
         if (currentVolume > 0) {
             currentVolume--;
         }
-    }
-
-    public void increaseVolume(int volume) { // увеличивает до нужной громкости
-        int target = currentVolume;
-
-        if (volume > 0) {
-            while (target < volume) {
-                louder();
-                target++;
-            }
-        } else {
-            while (target > volume) {
-                quieter();
-                target--;
-            }
-        }
-        setCurrentVolume(target);
     }
 }

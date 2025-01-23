@@ -8,7 +8,7 @@ public class RadioTest {
 // граничные значения ввода радиостанции ( 10, -1,)
 
     @Test
-    public void shouldInsertRadioStationAboveMax() {    // включим станцию выше максимальной
+    public void shouldInsertRadioStationAboveMax() {    // включит станцию выше максимальной
         Radio radio = new Radio();
 
         radio.setCurrentStationNumber(10);
@@ -20,7 +20,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldInsertRadioStationUnderMin() {    // включим станцию ниже максимальной
+    public void shouldInsertRadioStationUnderMin() {    // не должен включить станцию ниже минимальной
         Radio radio = new Radio();
 
         radio.setCurrentStationNumber(-1);
@@ -47,7 +47,7 @@ public class RadioTest {
 
 
     @Test
-    public void shouldNotSwitchToNextRadioStationAboveMax() {   // нажмем Next находясь на максимальной станции
+    public void shouldSwitchFromMaxToMinRadioStation() {   // Next с 9 станции должен переключить на 0
         Radio radio = new Radio();
 
         radio.setCurrentStationNumber(9);
@@ -60,7 +60,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSwitchToNextRadioStationFromMin() {   // нажмем Next находясь на минимальной станции
+    public void shouldSwitchToNextRadioStationFromMin() {   // нажмем Next находясь на 0 станции
         Radio radio = new Radio();
 
         radio.setCurrentStationNumber(0);
@@ -72,10 +72,10 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-// // границные значения Prev (=min, !=min, 0) + граничные значения ввода номера станции ( 8, 9, 0)
+// // границные значения Prev (=min, !=min, 0) + граничные значения ввода номера станции ( 8, 0)
 
     @Test
-    public void shouldSwitchToPrevRadioStationFromEighth() {   // нажмем Prev находясь на 8 станции
+    public void shouldSwitchToPrevRadioStationFromEighth() {   // Prev с 8 станции переключит на 7ую
         Radio radio = new Radio();
 
         radio.setCurrentStationNumber(8);
@@ -88,7 +88,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldNotSwitchToPrevRadioStationUnderMin() {  // нажмем Prev находясь на минимальной станции
+    public void shouldSwitchFromMinToMaxRadioStation() {  //  Prev с 0 станции должен переключить на 9
         Radio radio = new Radio();
 
         radio.setCurrentStationNumber(0);
@@ -100,13 +100,15 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-// верхние граничные значения увеличение громкости (99, 100, 101)
+// верхние граничные значения увеличение громкости (99, 100)
 
     @Test
-    public void shouldIncreaseVolumeWithinLimit() {  // увеличение звука в существующем диапазоне
+    public void shouldIncreaseVolumeWithinLimit() {  // увеличение звука в существующем диапазоне с 99
         Radio radio = new Radio();
 
-        radio.increaseVolume(99);
+        for (int volume = 0; volume < 99; volume++) {
+            radio.louder();
+        }
         radio.louder();
 
         int expected = 100;
@@ -119,8 +121,11 @@ public class RadioTest {
     public void shouldNotIncreaseVolumeAboveMax() {  // не должен увеличить звук выше максимального
         Radio radio = new Radio();
 
-        radio.increaseVolume(100);
+        for (int volume = 0; volume < 100; volume++) {
+            radio.louder();
+        }
         radio.louder();
+
 
         int expected = 100;
         int actual = radio.getCurrentVolume();
@@ -128,40 +133,12 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldNotSwitchVolumeAboveMax() {  // не должен увеличить звук выше максимального
-        Radio radio = new Radio();
-
-        radio.increaseVolume(101);
-        radio.louder();
-
-        int expected = 100;
-        int actual = radio.getCurrentVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    // нижние граничные значения уменьшения громкости (-1, 1, 0)
+    // нижние граничные значения уменьшения громкости ( 1, 0)
 
     @Test
     public void shouldNotSwitchVolumeUnderMin() {  // не должен переключать звук ниже минимального
         Radio radio = new Radio();
 
-        radio.increaseVolume(-1);
-        radio.quieter();
-
-
-        int expected = 0;
-        int actual = radio.getCurrentVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldDecreaseVolumeWithinLimit() {  // понижение звука в существующем диапазоне ( c 1)
-        Radio radio = new Radio();
-
-        radio.increaseVolume(1);
         radio.quieter();
 
         int expected = 0;
@@ -171,10 +148,13 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldNotDecreaseVolumeUnderMin() {  // не должен понижать звук ниже минимального
+    public void shouldDecreaseVolumeWithinLimit() {  // понижение звука в существующем диапазоне ( c 2 до 0)
         Radio radio = new Radio();
 
-        radio.increaseVolume(0);
+        for (int volume = 0; volume < 2; volume++) {
+            radio.louder();
+        }
+        radio.quieter();
         radio.quieter();
 
         int expected = 0;
