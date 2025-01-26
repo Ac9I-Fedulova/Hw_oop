@@ -113,8 +113,8 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldInsertStationWithinLimitIndicatingStations() {   //включит станцию в сущ-ем диапазоне
-                                                                       // при указании станций
+    public void shouldInsertStationWithinLimitIndicatingStations() {   // включит станцию в сущ-ем диапазоне
+        // при указании станций
         Radio radio = new Radio(30);
 
         radio.setCurrentStationNumber(10);
@@ -140,7 +140,7 @@ public class RadioTest {
 
     @Test
     public void shouldSwitchFromMinToMaxStationIndicatingStations() {  //  Prev с 0 станции переключит на мах
-                                                                      // при указании числа станций
+        // при указании числа станций
         Radio radio = new Radio(30);
 
         radio.setCurrentStationNumber(0);
