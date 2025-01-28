@@ -1,64 +1,124 @@
 package ru.netology.oop;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+
 public class Radio {
     private int currentStationNumber;
     private int currentVolume;
+    private int maxStation;
+
+    public Radio() {
+        this.maxStation = 9;
+    }
+
+    public Radio(int numberStations) {
+        this.maxStation = numberStations - 1;
+    }
 
     public int getCurrentStationNumber() {
-        return currentStationNumber;
+        return this.currentStationNumber;
     }
 
     public void setCurrentStationNumber(int newCurrentStationNumber) {
-        if (newCurrentStationNumber > 9) {
-            return;
+        if (newCurrentStationNumber <= this.maxStation) {
+            if (newCurrentStationNumber >= 0) {
+                this.currentStationNumber = newCurrentStationNumber;
+            }
         }
-        if (newCurrentStationNumber < 0) {
-            return;
-        }
-        currentStationNumber = newCurrentStationNumber;
     }
 
-    public int next() {   // переключает радио станцию вперед
-        if (currentStationNumber != 9) {
-            currentStationNumber++;
+    public int next() {
+        if (this.currentStationNumber != this.maxStation) {
+            ++this.currentStationNumber;
         } else {
-            currentStationNumber = 0;
+            this.currentStationNumber = 0;
         }
-        return currentStationNumber;
+
+        return this.currentStationNumber;
     }
 
-    public int prev() {    // переключает радио станцию назад
-        if (currentStationNumber != 0) {
-            currentStationNumber--;
+    public int prev() {
+        if (this.currentStationNumber != 0) {
+            --this.currentStationNumber;
         } else {
-            currentStationNumber = 9;
+            this.currentStationNumber = this.maxStation;
         }
-        return currentStationNumber;
+
+        return this.currentStationNumber;
     }
 
     public int getCurrentVolume() {
-        return currentVolume;
+        return this.currentVolume;
     }
 
-//    public void setCurrentVolume(int newCurrentVolume) {
-//        if (newCurrentVolume > 100) {
-//            return;
-//        }
-//        if (newCurrentVolume < 0) {
-//            return;
-//        }
-//        currentVolume = newCurrentVolume;
-//    }
-
-    public void louder() {     // повышает громкость на 1
-        if (currentVolume < 100) {
-            currentVolume++;
+    public void setCurrentVolume(int newCurrentVolume) {
+        if (newCurrentVolume <= 100) {
+            if (newCurrentVolume >= 0) {
+                this.currentVolume = newCurrentVolume;
+            }
         }
     }
 
-    public void quieter() {    // понижает громкость на 1
-        if (currentVolume > 0) {
-            currentVolume--;
+    public void louder() {
+        if (this.currentVolume < 100) {
+            ++this.currentVolume;
         }
+
+    }
+
+    public void quieter() {
+        if (this.currentVolume > 0) {
+            --this.currentVolume;
+        }
+
+    }
+
+    public int getMaxStation() {
+        return this.maxStation;
+    }
+
+    public void setMaxStation(int maxStation) {
+        this.maxStation = maxStation;
+    }
+
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        } else if (!(o instanceof Radio)) {
+            return false;
+        } else {
+            Radio other = (Radio) o;
+            if (!other.canEqual(this)) {
+                return false;
+            } else if (this.getCurrentStationNumber() != other.getCurrentStationNumber()) {
+                return false;
+            } else if (this.getCurrentVolume() != other.getCurrentVolume()) {
+                return false;
+            } else {
+                return this.getMaxStation() == other.getMaxStation();
+            }
+        }
+    }
+
+    protected boolean canEqual(Object other) {
+        return other instanceof Radio;
+    }
+
+    public int hashCode() {
+        int prime = 59;
+        int result = 1;
+        result = result * 59 + this.getCurrentStationNumber();
+        result = result * 59 + this.getCurrentVolume();
+        result = result * 59 + this.getMaxStation();
+        return result;
+    }
+
+    public String toString() {
+        int var10000 = this.getCurrentStationNumber();
+        return "Radio(currentStationNumber=" + var10000 + ", currentVolume=" + this.getCurrentVolume() + ", maxStation=" + this.getMaxStation() + ")";
     }
 }
