@@ -100,6 +100,58 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    public void shouldInsertStationAboveMaxIndicatingStations() {    // включит станцию выше мах при указании станций
+        Radio radio = new Radio(30);
+
+        radio.setCurrentStationNumber(30);
+
+        int expected = 0;
+        int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldInsertStationWithinLimitIndicatingStations() {   // включит станцию в сущ-ем диапазоне
+        // при указании станций
+        Radio radio = new Radio(30);
+
+        radio.setCurrentStationNumber(10);
+
+        int expected = 10;
+        int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSwitchFromMaxToMinStationIndicatingStations() {   // Next с мах станции переключит на 0
+        Radio radio = new Radio(30);
+
+        radio.setCurrentStationNumber(29);
+        radio.next();
+
+        int expected = 0;
+        int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSwitchFromMinToMaxStationIndicatingStations() {  //  Prev с 0 станции переключит на мах
+        // при указании числа станций
+        Radio radio = new Radio(30);
+
+        radio.setCurrentStationNumber(0);
+        radio.prev();
+
+        int expected = 29;
+        int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 // верхние граничные значения увеличение громкости (99, 100)
 
     @Test
